@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Profile{% endblock %}
+
+{% block body_block %}
+
+
+
+{% if user.profile %} <!-- oneeek niche else ase -->
+{# User profile is alive, do nothing #}
+
+<div class="container ">
+
+  <div class="row profile-page profile-margin profile-content">
+    <div class="col-sm-3"><!--left col-3-->
+
+      <div class="text-center ">
+        <!-- Profile Image -->
+        
+        <img src="{{ profile.image.url }}" height="200px" width="200px" class="avatar rounded-circle img-thumbnail" alt="avatar">
+      </div>
+      <br>
+      <!-- Profile Name -->
+      <div class="card text-center">
+        <div class="card-body">
+          <b>{{profile.name}}</b>
+          <br>
+          <b>{{profile.varsity_id}}</b>
+
+        </div>
+      </div>
+
+      <br>
+
+      <!-- Profile Info -->
+      <ul class="list-group">
+        <li class="list-group-item text-muted text-center">Activity</li>
+        <li class="list-group-item text-right"><strong class="float-left">Current Sheet</strong> <a href="{% url 'sheets:main_sheet' slug=sheet_member.sheet.slug %}">{{ sheet_member.sheet }}</a></li>
+                <li class="list-group-item text-right"><strong class="float-left">Total Sheet Problems</strong> {{sheet_member.sheet.problems_added}}</li>
+        <li class="list-group-item text-right"><strong class="float-left">Solved</strong>{{sheet_member.solve_count}}</li>
+        <li class="list-group-item text-right"><strong class="float-left">Cutoff</strong> {{sheet_member.sheet.cut_off}}</li>
+        
+
+        <li class="list-group-item text-right"><strong class="float-left">Status</strong> {{profile.status}}</li>
+
+        <li class="list-group-item text-right"><strong class="float-left">Streak</strong> 78 Days</li>
+      </ul> 
+
+    </div><!--/col-3-->
+
+
+    <div class="col-sm-9">
+      <nav><!--Tabbed Navigation -->
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Todolist</a>
+          <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>  
+        </div>
+      </nav>
+      <hr>
+
+      <div class="tab-content" id="nav-tabContent"><!-- Tab 1 Contents -->
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          <table class="table table-bordered  table-striped table-sm  ">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Solved At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for solve in all_solve.all %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{{solve.problem.link}}">{{solve.problem}}</a></td>
+                <td>{{solve.problem.category}}</td>
+                <td>{{solve.solved_at}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <p>Tab2</p>
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <p>Tab3</p>
+        </div>
+
+      </div>
+
+    </div><!--/col-9-->
+  </div><!--/row-->
+
+
+<!-- <div class="profile-page profile-margin profile-content">
+<div class="container">
+	<div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="" height="300" width="300">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Profile Info</legend>
+              {{ u_form }}
+              {{ p_form }}
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Update</button>
+          </div>
+      </form>
+    </div>
+</div>
+</div> -->
+{% else %}
+  {# User profile is not alive, do update #}
+  <div class="container ">
+  <div class="row profile-page profile-margin profile-content">
+    <h1 class=" text-center">Please go to update profile to Create a profile</h1>
+
+  </div>
+</div>
+{% endif %}
+
+
+{% endblock %}

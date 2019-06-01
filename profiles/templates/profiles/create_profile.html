@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Profile{% endblock %}
+
+{% block body_block %}
+
+  <div class="login-page">
+
+    <div class="form register-form">
+      <h1> Profile Edit </h1>
+
+  <form action="{% url 'profiles:create_profile' user.id %}" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Name</legend>
+                  <input type="text" name="name" value="{{ user.profile.name }}">
+                  <legend class="border-bottom mb-4">Varsity ID</legend>
+                  <input type="text" name="varsity_id" value="{{ user.profile.varsity_id }}">
+                  <legend class="border-bottom mb-4">Profile Picture</legend>
+                  <input type="file" name="image">
+
+              </fieldset>
+
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+
+    </div>
+  </div>
+
+
+
+<!-- <div class="profile-page profile-margin profile-content">
+<div class="container">
+	<div class="content-section">
+
+    <h1>Your User id: {{ user.id }}</h1>
+      <form action="{% url 'profiles:create_profile' user.id %}" method="POST" enctype="multipart/form-data">
+
+          {% csrf_token %}
+          <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Name</legend>
+                <input type="text" name="name" value="{{ user.profile.name }}">
+                <legend class="border-bottom mb-4">Varsity ID</legend>
+                <input type="text" name="varsity_id" value="{{ user.profile.varsity_id }}">
+                <legend class="border-bottom mb-4">Profile Picture</legend>
+                <input type="file" name="image">
+
+            </fieldset>
+
+          <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Update</button>
+          </div>
+      </form>
+    </div>
+</div>
+</div> -->
+{% endblock %}
+
+
+
